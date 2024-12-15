@@ -1,5 +1,5 @@
-from pydantic import BaseModel, Field, PositiveFloat
 from typing import Optional
+from pydantic import BaseModel, Field, PositiveFloat
 
 class StockMetaData(BaseModel):
     uuid: str
