@@ -31,9 +31,9 @@ class StockMetaData(BaseModel):
     """
 
     uuid: str
-    currentPrice: PositiveFloat
     fiftyTwoWeekLow: PositiveFloat
     fiftyTwoWeekHigh: PositiveFloat
+    currentPrice: Optional[PositiveFloat] = Field(0.0, ge=0)
     marketCap: Optional[PositiveInt] = Field(0.0, ge=0)
     trailingPE: Optional[float] = Field(0.0, ge=0)
     longName: str = Field(default="")
