@@ -1,5 +1,5 @@
 from typing import Optional
-from pydantic import BaseModel, Field, PositiveFloat
+from pydantic import BaseModel, Field, PositiveFloat, PositiveInt
 
 
 class StockMetaData(BaseModel):
@@ -13,6 +13,7 @@ class StockMetaData(BaseModel):
         currentPrice (PositiveFloat): The current trading price of the stock, must be positive.
         fiftyTwoWeekLow (PositiveFloat): The lowest price of the stock in the last 52 weeks, must be positive.
         fiftyTwoWeekHigh (PositiveFloat): The highest price of the stock in the last 52 weeks, must be positive.
+        marketCap (PositiveInt): The Market Cap for the Company
         trailingPE (Optional[float]): The trailing price-to-earnings ratio of the stock, must be non-negative.
         longName (str): The full name of the company, default is an empty string.
         symbol (str): The ticker symbol of the stock, default is an empty string.
@@ -33,9 +34,8 @@ class StockMetaData(BaseModel):
     currentPrice: PositiveFloat
     fiftyTwoWeekLow: PositiveFloat
     fiftyTwoWeekHigh: PositiveFloat
-    trailingPE: Optional[float] = Field(
-        0.0, ge=0
-    )  # Optional and must be >= 0 if provided
+    marketCap: Optional[PositiveInt] = Field(0.0, ge=0)
+    trailingPE: Optional[float] = Field(0.0, ge=0)
     longName: str = Field(default="")
     symbol: str = Field(default="")
     longBusinessSummary: str = Field(default="")

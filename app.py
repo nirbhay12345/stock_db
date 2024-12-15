@@ -3,6 +3,8 @@ from dateutil.relativedelta import relativedelta
 import streamlit as st
 import plotly.graph_objs as go
 import plotly.express as px
+from millify import millify
+
 from lib import stock_helper as sh
 
 
@@ -127,22 +129,28 @@ def app():
                 stock_data
             )
 
-            col1, col2, col3, col4, col5 = st.columns(5)
+            col1, col2, col3, col4, col5, col6 = st.columns(6)
             with col1:
-                st.metric("Close Price", f"₹{metadata.currentPrice:.2f}")
+                st.metric("Close Price", f"₹{metadata.currentPrice:,.2f}")
             with col2:
                 st.metric(
                     "Price Difference",
-                    f"₹{price_difference:.2f}",
+                    f"₹{price_difference:,.2f}",
                     f"{percentage_difference:+.2f}%",
                 )
                 pass
             with col3:
-                st.metric("52-Week High", f"₹{metadata.fiftyTwoWeekHigh:.2f}")
+                st.metric("52-Week High", f"₹{metadata.fiftyTwoWeekHigh:,.2f}")
             with col4:
-                st.metric("52-Week Low", f"₹{metadata.fiftyTwoWeekLow:.2f}")
+                st.metric("52-Week Low", f"₹{metadata.fiftyTwoWeekLow:,.2f}")
             with col5:
                 st.metric("PE Ratio", f"{metadata.trailingPE:.2f}")
+            with col6:
+                st.metric(
+                    "Market Cap",
+                    f"₹{millify(metadata.marketCap)}",
+                    help=f"₹{metadata.marketCap:,}",
+                )
 
             st.subheader("Trend Chart")
             chart_type = st.pills(
