@@ -16,25 +16,12 @@ def get_stock_data(symbol, start_date, end_date):
 def get_stock_list():
 
     all_stocks = nse.nse_eq_symbols()
-    stocklist = [f'{i}.NS' for i in all_stocks]
-    return stocklist
+    stock_list = [f'{i}.NS' for i in all_stocks]
+    return stock_list
 
 def get_stock_metadata(symbol):
 
     metadata = yf.Ticker(symbol)
-    stock_md = StockMetaData(
-                uuid=metadata.info['uuid'],
-                currentPrice=metadata.info['currentPrice'], 
-                longName=metadata.info['longName'], 
-                symbol=metadata.info['symbol'], 
-                fiftyTwoWeekLow=metadata.info['fiftyTwoWeekLow'], 
-                fiftyTwoWeekHigh=metadata.info['fiftyTwoWeekHigh'], 
-                trailingPE=metadata.info['trailingPE'], 
-                longBusinessSummary=metadata.info['longBusinessSummary'], 
-                industry=metadata.info['industry'], 
-                industryKey=metadata.info['industryKey'], 
-                sector=metadata.info['sector'], 
-                sectorKey=metadata.info['sectorKey']
-            )
+    stock_md = StockMetaData(**metadata.info)
 
     return stock_md

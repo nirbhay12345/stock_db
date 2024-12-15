@@ -3,7 +3,6 @@ from dateutil.relativedelta import relativedelta
 import streamlit as st
 import plotly.graph_objs as go
 import plotly.express as px
-import yfinance as yf
 from lib import stock_helper as sh
 
 @st.cache_resource
@@ -31,7 +30,6 @@ def calculate_price_difference(stock_data):
     return price_difference, percentage_difference
 
 def app():
-    #-- BOLIERPLATE --#
     st.set_page_config(page_title="Stock Dashboard", layout="wide", page_icon="📈")
     hide_menu_style = "<style> footer {visibility: hidden;} </style>"
     st.markdown(hide_menu_style, unsafe_allow_html=True)
@@ -47,6 +45,9 @@ def app():
         stock_data = sh.get_stock_data(symbol, start_date, end_date)
         metadata = sh.get_stock_metadata(symbol)
         if stock_data is not None:
+            st.sidebar.text(f"Stock: {metadata.longName}")
+            st.sidebar.text(f"Sector: {metadata.sector}")
+            st.sidebar.text(f"Website: {metadata.website}")
             price_difference, percentage_difference = calculate_price_difference(stock_data)
 
             col1, col2, col3, col4, col5 = st.columns(5)
